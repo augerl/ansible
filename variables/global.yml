@@ -1,0 +1,36 @@
+---
+# Packages which should be installed on every linux or mac os devices
+common_packages:
+  - git
+  - curl
+  - btop
+  - iotop
+  - lsof
+  - ncdu
+  - neofetch
+  - net-tools
+  - nmap
+  - rsync
+  - sshfs
+  - tmux
+  - traceroute
+  - wget
+  - whois
+  - zsh
+  - git
+  - jq
+  - python3
+  - python-pip
+  - nfs-utils
+
+# Github 
+github-user: augerl
+
+# My Github repositories which should be cloned to every machine
+git_repositories:
+  - repo: "https://github.com/augerl/dotfiles.git"
+    dest: "~/dotfiles"
+  - repo: "https://github.com/augerl/ansible.git"
+    dest: "~/ansible"
+  - repo: "https://github.com/augerl/docker-stacks.git"
+    dest: "~/docker-compose"
