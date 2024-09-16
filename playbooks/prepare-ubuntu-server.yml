@@ -1,6 +1,6 @@
 ---
 - name: Initial setup of Ubuntu server
-  hosts: ubuntu_servers
+  hosts: server
   become: true
   vars_files:
     - ../variables/global.yml
