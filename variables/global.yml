@@ -21,7 +21,8 @@ common_packages:
   - jq
   - python3
   - python3-pip
-  - nfs-utils
+  - nfs-kernel-server
+  - nfs-common
 
 # Github 
 github-user: augerl
@@ -32,5 +33,5 @@ git_repositories:
     dest: "~/dotfiles"
   - repo: "https://github.com/augerl/ansible.git"
     dest: "~/ansible"
-  - repo: "https://github.com/augerl/docker-stacks.git"
-    dest: "~/docker-compose"
+#  - repo: "https://github.com/augerl/docker-stacks.git"
+#    dest: "~/docker-compose"
