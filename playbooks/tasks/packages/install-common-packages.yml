@@ -2,4 +2,26 @@
   tags: packages,system,settings
   package:
     state: latest
-    name: "{{ common_packages }}"
+    name:
+      - git
+      - curl
+      - btop
+      - iotop
+      - lsof
+      - ncdu
+      - neofetch
+      - net-tools
+      - nmap
+      - rsync
+      - sshfs
+      - tmux
+      - traceroute
+      - wget
+      - whois
+      - zsh
+      - git
+      - jq
+      - python3
+      - python3-pip
+      - nfs-kernel-server
+      - nfs-common

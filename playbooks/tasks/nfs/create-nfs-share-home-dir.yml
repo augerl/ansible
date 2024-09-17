@@ -1,0 +1,14 @@
+---
+- name: Configure NFS export
+  lineinfile:
+    path: /etc/exports
+    line: "/home/unsmart *(rw,sync,no_root_squash)"
+    create: yes
+
+- name: Export NFS shares
+  command: exportfs -ra
+
+- name: Restart NFS service
+  service:
+    name: nfs-kernel-server
+    state: restarted
