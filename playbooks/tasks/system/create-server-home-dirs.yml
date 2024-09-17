@@ -8,3 +8,4 @@
     - scripts
     - appdata
   become: true
+  become_user: "{{ username }}"
