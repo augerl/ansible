@@ -7,5 +7,5 @@ git_repositories:
     dest: "/home/unsmart/dotfiles"
   - repo: "https://github.com/augerl/ansible.git"
     dest: "/home/unsmart/ansible"
-  - repo: "https://github.com/augerl/docker-stacks.git"
-    dest: "~/docker-compose"
+#  - repo: "https://github.com/augerl/docker-stacks.git"
+#    dest: "~/docker-compose"
