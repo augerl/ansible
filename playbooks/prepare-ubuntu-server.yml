@@ -3,7 +3,7 @@
   hosts: server
   vars_files:
     - ../variables/global.yml
-  become_user: {{ username }}
+  become_user: "{{ username }}"
   tasks:
     - include_tasks: tasks/system/update-upgrade.yml
     - include_tasks: tasks/packages/install-common-packages.yml
