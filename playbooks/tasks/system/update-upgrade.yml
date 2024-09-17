@@ -1,7 +1,6 @@
 ---
 - name: Update and upgrade apt packages
-  become: yes
-  become_user: "unsmart"
+  become: true
   apt:
     update_cache: yes
     upgrade: dist
