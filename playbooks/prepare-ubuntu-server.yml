@@ -8,7 +8,7 @@
   gather_facts: true
   tasks:
     - include_tasks: tasks/system/update-upgrade.yml
-#    - include_tasks: tasks/packages/install-common-packages.yml
+    - include_tasks: tasks/packages/install-common-packages.yml
 #    - include_tasks: tasks/git/clone-git-repos.yml
 #    - include_tasks: tasks/system/create-server-home-dirs.yml
 #    - include_tasks: tasks/docker/install-docker.yml
