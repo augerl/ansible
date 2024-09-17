@@ -5,5 +5,3 @@
     dest: "{{ item.dest }}"
     update: yes
   with_items: "{{ git_repositories }}"
-  become: true
-  become_user: "{{ username }}"

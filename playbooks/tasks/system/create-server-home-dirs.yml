@@ -7,5 +7,3 @@
   with_items:
     - scripts
     - appdata
-  become: true
-  become_user: "{{ username }}"
