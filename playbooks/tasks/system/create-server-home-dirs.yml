@@ -1,7 +1,7 @@
 ---
 - name: Create scripts and appdata directories in the current user's home directory
   file:
-    path: "{{ ansible_env.HOME }}/{{ item }}"
+    path: "/home/{{ username }}/{{ item }}"
     state: directory
     mode: '0755'
   with_items:
