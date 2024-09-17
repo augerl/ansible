@@ -1,6 +1,6 @@
 - name: Check if chezmoi is already installed
   stat:
-    path: /home/{{ username }}/.local/bin
+    path: /home/{{ username }}/.local/bin/chezmoi
   register: chezmoi_installed
 
 - name: Install chezmoi 
