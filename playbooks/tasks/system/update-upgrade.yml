@@ -1,7 +1,5 @@
 ---
 - name: Update and upgrade apt packages
-  become: true
-  remote_user: unsmart
   apt:
     update_cache: yes
     upgrade: dist

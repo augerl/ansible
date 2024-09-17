@@ -4,6 +4,7 @@
   vars_files:
     - ../variables/global.yml
   become: true
+  remote_user: unsmart
   gather_facts: true
   tasks:
     - include_tasks: tasks/system/update-upgrade.yml
