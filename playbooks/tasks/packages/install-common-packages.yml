@@ -1,7 +1,6 @@
 - name: system setup | utilities | install utility packages
   tags: packages,system,settings
+  become: true
   package:
     state: latest
     name: "{{ common_packages }}"
-  become: yes
-  become_user: "{{ username }}"

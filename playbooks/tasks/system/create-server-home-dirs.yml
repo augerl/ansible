@@ -7,3 +7,4 @@
   with_items:
     - scripts
     - appdata
+  become: true

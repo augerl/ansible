@@ -2,8 +2,10 @@
   stat:
     path: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
   register: chezmoi_installed
+  become: true
 
 - name: Install zsh-autosuggestions when not already installed
   shell: |
     sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply {{ github-user }}
   when: not chezmoi_installed.stat.exists
+  become: true
