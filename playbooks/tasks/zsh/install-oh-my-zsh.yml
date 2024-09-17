@@ -5,14 +5,12 @@
     state: present
     update_cache: yes
   become: true
-  become_user: "{{ username }}"
 
 - name: Ensure zsh is the default shell
   user:
     name: "{{ username }}"
     shell: "/usr/bin/zsh"
   become: true
-  become_user: "{{ username }}"
 
 - name: Download Oh My Zsh installation script
   get_url:
