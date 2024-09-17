@@ -32,8 +32,8 @@ github-user: "augerl"
 # My Github repositories which should be cloned to every machine
 git_repositories:
   - repo: "https://github.com/augerl/dotfiles.git"
-    dest: "~/dotfiles"
+    dest: "/home/unsmart/dotfiles"
   - repo: "https://github.com/augerl/ansible.git"
-    dest: "~/ansible"
+    dest: "/home/unsmart/ansible"
 #  - repo: "https://github.com/augerl/docker-stacks.git"
 #    dest: "~/docker-compose"
