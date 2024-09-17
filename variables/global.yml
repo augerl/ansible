@@ -1,4 +1,6 @@
 ---
+username: "unsmart"
+
 # Packages which should be installed on every linux or mac os devices
 common_packages:
   - git
@@ -25,7 +27,7 @@ common_packages:
   - nfs-common
 
 # Github 
-github-user: augerl
+github-user: "augerl"
 
 # My Github repositories which should be cloned to every machine
 git_repositories:
