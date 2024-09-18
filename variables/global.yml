@@ -1,5 +1,9 @@
 ---
 username: "unsmart"
+truenas_server: 10.0.100.250
+
+nfs_share_paths:
+  - 
 
 # My Github repositories which should be cloned to every machine
 git_repositories:

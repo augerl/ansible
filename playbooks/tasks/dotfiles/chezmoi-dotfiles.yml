@@ -1,9 +1,23 @@
+---
 - name: Check if chezmoi is already installed
   stat:
     path: /home/{{ username }}/.local/bin/chezmoi
   register: chezmoi_installed
 
-- name: Install chezmoi 
-  shell: |
-    sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply augerl
+- name: Download chezmoi install script
+  get_url:
+    url: https://get.chezmoi.io
+    dest: /tmp/install_chezmoi.sh
+    mode: '0755'
   when: not chezmoi_installed.stat.exists
+
+- name: Run Chezmoi installation script
+  shell: /tmp/install_chezmoi.sh -b /home/{{ username }}/.local/bin
+  args:
+    creates: "/home/{{ username }}.local/bin/chezmoi"
+  when: not chezmoi_installed.stat.exists
+
+- name: Remove Chezmoi installation script
+  ansible.builtin.file:
+    path: /tmp/install_chezmoi.sh
+    state: absent
