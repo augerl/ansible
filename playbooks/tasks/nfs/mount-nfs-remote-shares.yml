@@ -1,0 +1,36 @@
+---
+- name: Create mount points
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /mnt/zpool/data
+    - /mnt/zpool/documents
+    - /mnt/zpool/photos
+    - /mnt/zpool/paperless
+
+- name: Mount NFS shares
+  ansible.builtin.mount:
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    fstype: nfs
+    opts: defaults
+    state: mounted
+  loop:
+    - { path: /mnt/zpool/data, src: "{{ nfs-share }}:/mnt/zpool/data" }
+    - { path: /mnt/zpool/documents, src: "{{ nfs-share }}:/mnt/zpool/data" }
+    - { path: /mnt/zpool/photos, src: "{{ nfs-share }}:/mnt/zpool/photos" }
+    - { path: /mnt/zpool/paperless, src: "{{ nfs-share }}:/mnt/zpool/paperless" }
+
+- name: Ensure NFS shares are persistent
+  ansible.builtin.mount:
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    fstype: nfs
+    opts: defaults
+    state: present
+  loop:
+    - { path: /mnt/zpool/data, src: "{{ nfs-share }}:/mnt/zpool/data" }
+    - { path: /mnt/zpool/documents, src: "{{ nfs-share }}:/mnt/zpool/data" }
+    - { path: /mnt/zpool/photos, src: "{{ nfs-share }}:/mnt/zpool/photos" }
+    - { path: /mnt/zpool/paperless, src: "{{ nfs-share }}:/mnt/zpool/paperless" }

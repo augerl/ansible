@@ -14,3 +14,5 @@
     - include_tasks: tasks/docker/install-docker.yml
     - include_tasks: tasks/zsh/install-oh-my-zsh.yml
     - include_tasks: tasks/dotfiles/chezmoi-dotfiles.yml
+    - include_tasks: tasks/nfs/create-nfs-share-home-dir.yml
+    - include_tasks: tasks/nfs/mount-nfs-remote-share.yml
