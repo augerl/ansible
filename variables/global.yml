@@ -1,5 +1,6 @@
 ---
 username: "unsmart"
+github_username: "augerl"
 nfs-server: 10.0.100.250
 
 # My Github repositories which should be cloned to every machine
