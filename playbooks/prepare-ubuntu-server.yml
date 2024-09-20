@@ -13,4 +13,4 @@
     - include_tasks: tasks/system/create-server-home-dirs.yml
     - include_tasks: tasks/docker/install-docker.yml
     - include_tasks: tasks/nfs/create-nfs-share-home-dir.yml
-    - include_tasks: tasks/nfs/mount-nfs-remote-share.yml
+    - include_tasks: tasks/nfs/mount-nfs-remote-shares.yml
