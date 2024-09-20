@@ -47,9 +47,3 @@
   loop: "{{ mount_points }}"
   become: yes
   when: nfs_server_check is succeeded
-
-- name: Display mount errors if any
-  ansible.builtin.debug:
-    msg: "Failed to mount {{ item.item }}. Error: {{ item.stderr }}"
-  loop: "{{ mount_result.results }}"
-  when: mount_result is failed and item is failed
