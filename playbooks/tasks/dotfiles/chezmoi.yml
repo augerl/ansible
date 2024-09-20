@@ -1,23 +1,8 @@
 ---
- - name: Ensure required packages are installed
-   package:
-     name: 
-       - gdebi-core
-     state: present
-
- - name: Download Chezmoi deb file
-   get_url:
-     url: https://github.com/twpayne/chezmoi/releases/download/v2.52.2/chezmoi-linux-amd64.deb
-     dest: /tmp/chezmoi-linux-amd64.deb
-
- - name: Install Chezmoi from deb file
-   ansible.builtin.command:
-     cmd: "gdebi --non-interactive /tmp/chezmoi-linux-amd64.deb"
-
- - name: Initialize and apply Chezmoi with GitHub username
-   ansible.builtin.command:
-     cmd: "chezmoi init --apply {{ github_username }}"
-   args:
-     chdir: /home/{{ username }}
-   environment:
-     HOME: /home/{{ username }}
+- name: Install and apply Chezmoi with GitHub username
+  ansible.builtin.shell:
+    cmd: 'sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply {{ github_username }}'
+  environment:
+    HOME: "/home/{{ username }}"
+  args:
+    chdir: "/home/{{ username }}"
