@@ -4,15 +4,17 @@
     path: "{{ mount_base }}"
     state: directory
     mode: '0755'
+  become: yes
 
 - name: Create mount points with correct permissions for TEST user
   ansible.builtin.file:
     path: "{{ mount_base }}/{{ item }}"
     state: directory
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
     mode: '0755'
   loop: "{{ mount_points }}"
+  become: yes
 
 - name: Check if NFS server is reachable
   ansible.builtin.wait_for:
@@ -22,21 +24,32 @@
   ignore_errors: yes
   register: nfs_server_check
 
-- name: Mount NFS4 shares and ensure they are persistent
-  ansible.builtin.mount:
-    path: "{{ mount_base }}/{{ item }}"
-    src: "{{ nfs_server }}:{{ mount_base }}/{{ item }}"
-    fstype: nfs4
-    opts: "{{ nfs_mount_opts }}"
-    state: mounted
-    fstab: yes
+- name: Debug mount point paths
+  ansible.builtin.debug:
+    msg: "Mount point path: {{ mount_base }}/{{ item }}"
   loop: "{{ mount_points }}"
+
+- name: Mount NFS4 shares
+  ansible.builtin.command:
+    cmd: "mount -t nfs4 -o {{ nfs_mount_opts }} {{ nfs_server }}:{{ mount_base }}/{{ item }} {{ mount_base }}/{{ item }}"
+  loop: "{{ mount_points }}"
+  become: yes
   when: nfs_server_check is succeeded
   register: mount_result
   ignore_errors: yes
+  changed_when: mount_result.rc == 0
+
+- name: Add NFS mounts to fstab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "{{ nfs_server }}:{{ mount_base }}/{{ item }} {{ mount_base }}/{{ item }} nfs4 {{ nfs_mount_opts }} 0 0"
+    regexp: "^{{ nfs_server }}:{{ mount_base }}/{{ item }} {{ mount_base }}/{{ item }}"
+  loop: "{{ mount_points }}"
+  become: yes
+  when: nfs_server_check is succeeded
 
 - name: Display mount errors if any
   ansible.builtin.debug:
-    msg: "Failed to mount {{ item.item }}. Error: {{ item.msg }}"
+    msg: "Failed to mount {{ item.item }}. Error: {{ item.stderr }}"
   loop: "{{ mount_result.results }}"
   when: mount_result is failed and item is failed
