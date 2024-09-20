@@ -1,0 +1,25 @@
+---
+- name: Download Chezmoi binary
+  get_url:
+    url: https://github.com/twpayne/chezmoi/releases/latest/download/chezmoi-linux-amd64.tar.gz
+    dest: /tmp/chezmoi-linux-amd64.tar.gz
+
+- name: Extract Chezmoi binary
+  ansible.builtin.unarchive:
+    src: /tmp/chezmoi-linux-amd64.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+    creates: /usr/local/bin/chezmoi
+
+- name: Ensure Chezmoi binary is executable
+  ansible.builtin.file:
+    path: /usr/local/bin/chezmoi
+    mode: '0755'
+    
+- name: Initialize and apply Chezmoi with GitHub username
+  ansible.builtin.command:
+    cmd: "chezmoi init --apply {{ github_username }}"
+  args:
+    chdir: "{{ ansible_env.HOME }}"
+  environment:
+    HOME: "{{ ansible_env.HOME }}"
