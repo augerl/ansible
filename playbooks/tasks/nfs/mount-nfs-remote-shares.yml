@@ -10,8 +10,8 @@
   ansible.builtin.file:
     path: "{{ mount_base }}/{{ item }}"
     state: directory
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
     mode: '0755'
   loop: "{{ mount_points }}"
   become: yes
