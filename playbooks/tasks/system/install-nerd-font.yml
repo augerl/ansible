@@ -1,7 +1,8 @@
     - name: Get the latest Fira Code Nerd Font release URL
-      ansible.builtin.command:
-        cmd: "curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | jq -r '.assets[] | select(.name | contains(\"FiraCode.zip\")) | .browser_download_url'"
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | jq -r '.assets[] | select(.name | contains("FiraCode.zip")) | .browser_download_url'
       register: fira_code_download_url
+      failed_when: fira_code_download_url.stdout == ""
 
     - name: Debug the download URL (optional)
       ansible.builtin.debug:
