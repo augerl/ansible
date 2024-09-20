@@ -1,12 +1,26 @@
 ---
-- name: Create mount points
+- name: Ensure mount base directory exists
+  ansible.builtin.file:
+    path: "{{ mount_base }}"
+    state: directory
+    mode: '0755'
+
+- name: Create mount points with correct permissions for TEST user
   ansible.builtin.file:
     path: "{{ mount_base }}/{{ item }}"
     state: directory
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
     mode: '0755'
   loop: "{{ mount_points }}"
+
+- name: Check if NFS server is reachable
+  ansible.builtin.wait_for:
+    host: "{{ nfs_server }}"
+    port: 2049
+    timeout: 5
+  ignore_errors: yes
+  register: nfs_server_check
 
 - name: Mount NFS4 shares and ensure they are persistent
   ansible.builtin.mount:
@@ -17,3 +31,12 @@
     state: mounted
     fstab: yes
   loop: "{{ mount_points }}"
+  when: nfs_server_check is succeeded
+  register: mount_result
+  ignore_errors: yes
+
+- name: Display mount errors if any
+  ansible.builtin.debug:
+    msg: "Failed to mount {{ item.item }}. Error: {{ item.msg }}"
+  loop: "{{ mount_result.results }}"
+  when: mount_result is failed and item is failed
