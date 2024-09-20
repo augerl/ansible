@@ -1,7 +1,17 @@
 ---
 username: "unsmart"
 github_username: "augerl"
-nfs-server: 10.0.100.250
+
+# NFS Variables
+nfs_server: 10.0.100.250
+mount_base: "/mnt/zpool"
+mount_points:
+  - data
+  - games
+  - photos
+  - documents
+  - paperless
+nfs_mount_opts: "nfsvers=4,nouser,rsize=8192,wsize=8192,atime,auto,rw,dev,exec,suid"
 
 # My Github repositories which should be cloned to every machine
 git_repositories:
