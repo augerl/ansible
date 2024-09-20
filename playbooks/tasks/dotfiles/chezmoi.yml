@@ -1,4 +1,9 @@
 ---
+- name: Check if Chezmoi is already installed
+  ansible.builtin.stat:
+    path: "/home/{{ username }}/.local/bin/chezmoi"
+  register: chezmoi_exists
+
 - name: Install and apply Chezmoi with GitHub username
   ansible.builtin.shell:
     cmd: 'sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply {{ github_username }}'
@@ -6,3 +11,4 @@
     HOME: "/home/{{ username }}"
   args:
     chdir: "/home/{{ username }}"
+  when: not chezmoi_exists.stat.exists

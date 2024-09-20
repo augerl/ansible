@@ -24,3 +24,5 @@
       - python3-pip
       - nfs-kernel-server
       - nfs-common
+      - fontconfig
+      - unzip
