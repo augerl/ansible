@@ -1,66 +1,23 @@
 ---
-- name: Check if SSH key pair exists
-  stat:
-    path: ~/.ssh/id_rsa
-  register: ssh_key
+ - name: Set Git user name
+   ansible.builtin.command:
+     cmd: git config --global user.name "{{ github_username }}"
 
-- name: Generate SSH key pair if not present
-  ansible.builtin.openssh_keypair:
-    path: ~/.ssh/id_rsa
-    type: rsa
-    size: 4096
-  when: not ssh_key.stat.exists
+ - name: Set Git user email
+   ansible.builtin.command:
+     cmd: git config --global user.email "{{ github_mail }}"
 
-- name: Read public SSH key
-  slurp:
-    src: ~/.ssh/id_rsa.pub
-  register: public_key
+ - name: Set GitHub remote to use HTTPS with token
+   block:
+     - name: Update repository URLs to use HTTPS with the GitHub token
+       set_fact:
+         repo_url_with_token: "https://{{ github_token }}@github.com/{{ item.repo }}"
+       with_items: "{{ git_repositories }}"
+       register: repo_urls
 
-- name: Decode the SSH public key from base64
-  set_fact:
-    decoded_public_key: "{{ public_key.content | b64decode }}"
-
-- name: Add SSH public key to GitHub
-  uri:
-    url: "https://api.github.com/user/keys"
-    method: POST
-    headers:
-      Authorization: "token {{ github_token }}"
-      Content-Type: "application/json"
-    body_format: json
-    body: |
-      {
-        "title": "{{ inventory_hostname }}",
-        "key": "{{ public_key.content | b64decode }}"
-      }
-    status_code: 201
-  register: github_response
-
-- name: Debug GitHub API response
-  debug:
-    var: github_response
-
-- name: Ensure SSH agent is running and add the private key
-  ansible.builtin.command: ssh-add ~/.ssh/id_rsa
-  ignore_errors: true  # In case agent forwarding is not enabled
-
-- name: Add GitHub to known hosts
-  ansible.builtin.known_hosts:
-    path: ~/.ssh/known_hosts
-    name: github.com
-    key: "{{ lookup('pipe', 'ssh-keyscan github.com') }}"
-
-- name: Set Git user name
-  ansible.builtin.command:
-    cmd: git config --global user.name "{{ github_username }}"
-
-- name: Set Git user email
-  ansible.builtin.command:
-    cmd: git config --global user.email "{{ github_mail }}"
-
-- name: Clone my Github repositories
-  git:
-    repo: "{{ item.repo }}"
-    dest: "{{ item.dest }}"
-    update: yes
-  with_items: "{{ git_repositories }}"
+ - name: Clone my GitHub repositories using HTTPS and Personal Access Token
+   git:
+     repo: "{{ repo_url_with_token }}"
+     dest: "{{ item.dest }}"
+     update: yes
+   with_items: "{{ git_repositories }}"
