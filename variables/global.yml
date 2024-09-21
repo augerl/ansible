@@ -1,23 +1,15 @@
 ---
-username: "unsmart"
-github_username: "augerl"
-
-# NFS Variables
-nfs_server: 10.0.100.250
-mount_base: "/mnt/zpool"
-mount_points:
-  - data
-  - games
-  - photos
-  - documents
-  - paperless
-nfs_mount_opts: "nfsvers=4,nouser,rsize=8192,wsize=8192,atime,auto,rw,dev,exec,suid"
-
-# My Github repositories which should be cloned to every machine
-git_repositories:
-  - repo: "https://github.com/augerl/dotfiles.git"
-    dest: "/home/unsmart/dotfiles"
-  - repo: "https://github.com/augerl/ansible.git"
-    dest: "/home/unsmart/ansible"
-#  - repo: "https://github.com/augerl/docker-stacks.git"
-#    dest: "~/docker-compose"
+# ZSH Plugins
+zsh_plugins:
+  - name: zsh-syntax-highlighting
+    repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+  - name: zsh-autosuggestions
+    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+  - name: zsh-history-substring-search
+    repo: "https://github.com/zsh-users/zsh-history-substring-search.git"
+  - name: ohmyzsh-full-autoupdate
+    repo: "https://github.com/Pilaton/OhMyZsh-full-autoupdate.git"
+  - name: you-should-use
+    repo: "https://github.com/MichaelAquilina/zsh-you-should-use.git"
+  - name: zsh-bat
+    repo: "https://github.com/fdellwing/zsh-bat.git"

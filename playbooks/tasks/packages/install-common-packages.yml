@@ -26,3 +26,6 @@
       - nfs-common
       - fontconfig
       - unzip
+      - bat                 # https://github.com/sharkdp/bat
+      - fzf                 # https://github.com/junegunn/fzf
+      - exa                 # https://the.exa.website/introduction
