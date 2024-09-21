@@ -26,7 +26,7 @@
     body_format: json
     body: |
       {
-        "title": "{{ inventory_hostname }}_{{ ansible_date_time.date | replace('-', '') }}",
+        "title": "{{ inventory_hostname }}",
         "key": "{{ public_key.content | b64decode }}"
       }
     status_code: 201
