@@ -16,6 +16,10 @@
     src: ~/.ssh/id_rsa.pub
   register: public_key
 
+- name: Decode the SSH public key from base64
+  set_fact:
+    decoded_public_key: "{{ public_key.content | b64decode }}"
+
 - name: Add SSH public key to GitHub
   uri:
     url: "https://api.github.com/user/keys"
@@ -31,6 +35,10 @@
       }
     status_code: 201
   register: github_response
+
+- name: Debug GitHub API response
+  debug:
+    var: github_response
 
 - name: Ensure SSH agent is running and add the private key
   ansible.builtin.command: ssh-add ~/.ssh/id_rsa
