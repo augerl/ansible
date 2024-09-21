@@ -1,23 +1,15 @@
 ---
- - name: Set Git user name
-   ansible.builtin.command:
-     cmd: git config --global user.name "{{ github_username }}"
+- name: Set Git user name
+  ansible.builtin.command:
+    cmd: git config --global user.name "{{ github_username }}"
 
- - name: Set Git user email
-   ansible.builtin.command:
-     cmd: git config --global user.email "{{ github_mail }}"
+- name: Set Git user email
+  ansible.builtin.command:
+    cmd: git config --global user.email "{{ github_mail }}"
 
- - name: Set GitHub remote to use HTTPS with token
-   block:
-     - name: Update repository URLs to use HTTPS with the GitHub token
-       set_fact:
-         repo_url_with_token: "https://{{ github_token }}@github.com/{{ item.repo }}"
-       with_items: "{{ git_repositories }}"
-       register: repo_urls
-
- - name: Clone my GitHub repositories using HTTPS and Personal Access Token
-   git:
-     repo: "{{ repo_url_with_token }}"
-     dest: "{{ item.dest }}"
-     update: yes
-   with_items: "{{ git_repositories }}"
+- name: Clone Git repositories
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    update: yes
+  with_items: "{{ git_repositories }}"
