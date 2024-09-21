@@ -3,6 +3,7 @@
   hosts: server
   vars_files:
     - ../variables/global.yml
+    - ../variables/vault.yml
   become: true
   remote_user: "{{ username }}"
   gather_facts: true
