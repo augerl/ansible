@@ -4,6 +4,8 @@
     state: latest
     name:
       - git
+      - ca-certificates
+      - software-properties-common
       - curl
       - btop
       - iotop

@@ -1,4 +1,35 @@
 ---
+- name: Add GitHub CLI apt repository key
+  apt_key:
+     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+     state: present
+
+- name: Add GitHub CLI repository to apt sources
+  apt_repository:
+    repo: deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main
+    state: present
+    filename: github-cli
+
+- name: Install GitHub CLI
+  apt:
+    name: gh
+    state: latest
+
+- name: Log in to GitHub CLI using personal access token
+  shell: |
+    echo "{{ github_token }}" | gh auth login --with-token
+  environment:
+    GITHUB_TOKEN: "{{ github_token }}"
+  args:
+    creates: /root/.config/gh/hosts.yml  # Prevents re-authentication if already authenticated
+
+- name: Verify GitHub CLI installation
+  command: gh --version
+  register: gh_version
+- name: Show installed GitHub CLI version
+  debug:
+    msg: "GitHub CLI version: {{ gh_version.stdout }}"
+    
 - name: Set Git user name
   ansible.builtin.command:
     cmd: git config --global user.name "{{ github_username }}"
