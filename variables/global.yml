@@ -7,8 +7,8 @@ zsh_plugins:
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
   - name: zsh-history-substring-search
     repo: "https://github.com/zsh-users/zsh-history-substring-search.git"
-  - name: ohmyzsh-full-autoupdate
-    repo: "https://github.com/Pilaton/OhMyZsh-full-autoupdate.git"
+#  - name: ohmyzsh-full-autoupdate
+#    repo: "https://github.com/Pilaton/OhMyZsh-full-autoupdate.git"
   - name: you-should-use
     repo: "https://github.com/MichaelAquilina/zsh-you-should-use.git"
   - name: zsh-bat
