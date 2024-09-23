@@ -17,3 +17,4 @@
     - include_tasks: tasks/nfs/mount-nfs-remote-shares.yml
     - include_tasks: tasks/dotfiles/chezmoi.yml
     - include_tasks: tasks/zsh/install-oh-my-zsh.yml
+    - inlcude_tasks: tasks/starship/install-starship-prompt.yml
