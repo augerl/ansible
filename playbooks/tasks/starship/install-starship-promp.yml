@@ -1,0 +1,25 @@
+---
+- name: Download Starship binary
+  get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/install_starship.sh
+    mode: '0755'
+
+- name: Run Starship installer
+  shell: /tmp/install_starship.sh -y
+  args:
+    creates: /usr/local/bin/starship
+
+- name: Ensure Starship is added to the shell configuration
+  lineinfile:
+    path: "{{ item }}"
+    line: 'eval "$(starship init {{ ansible_shell_type }})"'
+    create: yes
+  with_items:
+    - /home/{{ username }}/.bashrc
+    - /home/{{ username }}/.zshrc
+  when: ansible_shell_type in ['bash', 'zsh']
+
+- name: Source the shell configuration
+  shell: source ~/.{{ ansible_shell_type }}rc
+  when: ansible_shell_type in ['bash', 'zsh']
