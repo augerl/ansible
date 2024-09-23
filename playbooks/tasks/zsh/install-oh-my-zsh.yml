@@ -43,9 +43,3 @@
     recurse: yes
     owner: "{{ username }}"
     group: "{{ username }}"
-
-- name: Install powerlevel10k as Zsh theme
-  ansible.builtin.git:
-    repo: https://gitee.com/romkatv/powerlevel10k.git
-    dest: "/home/{{ username }}/.oh-my-zsh/custom/themes/powerlevel10k"
-    update: no
