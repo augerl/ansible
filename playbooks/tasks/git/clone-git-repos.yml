@@ -14,8 +14,9 @@
     state: latest
 
 - name: Log in to GitHub CLI using personal access token
+  ignore_errors: yes
   shell: |
-    gh auth login --with-token "{{ github_token }}"
+    echo "{{ github_token }}" | gh auth login --with-token
   args:
     creates: /root/.config/gh/hosts.yml  # Prevents re-authentication if already authenticated
 

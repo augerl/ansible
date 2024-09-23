@@ -12,8 +12,8 @@
     - include_tasks: tasks/packages/install-common-packages.yml
     - include_tasks: tasks/git/clone-git-repos.yml
     - include_tasks: tasks/system/create-server-home-dirs.yml
-    - include_tasks: tasks/zsh/install-oh-my-zsh.yml
     - include_tasks: tasks/docker/install-docker.yml
     - include_tasks: tasks/nfs/create-nfs-share-home-dir.yml
     - include_tasks: tasks/nfs/mount-nfs-remote-shares.yml
     - include_tasks: tasks/dotfiles/chezmoi.yml
+    - include_tasks: tasks/zsh/install-oh-my-zsh.yml
