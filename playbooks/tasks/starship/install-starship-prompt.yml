@@ -4,12 +4,16 @@
     url: https://starship.rs/install.sh
     dest: /tmp/install_starship.sh
     mode: '0755'
+  become: yes
+  become_user: "{{ username }}"
 
 - name: Run Starship installer
   shell: /tmp/install_starship.sh -y
   args:
     creates: /usr/local/bin/starship
-
+  become: yes
+  become_user: "{{ username }}"
+  
 - name: Ensure Starship is added to the shell configuration
   lineinfile:
     path: "{{ item.path }}"
@@ -17,5 +21,5 @@
     create: yes
   loop:
     - { path: "/home/{{ username }}/.bashrc", shell: "bash" }
-#    - { path: "/home/{{ username }}/.zshrc", shell: "zsh" }
+    - { path: "/home/{{ username }}/.zshrc", shell: "zsh" }
 
