@@ -6,7 +6,7 @@
     mode: '0755'
   become: yes
 
-- name: Create mount points with correct permissions for TEST user
+- name: Create mount points with correct permissions
   ansible.builtin.file:
     path: "{{ mount_base }}/{{ item }}"
     state: directory
@@ -24,11 +24,6 @@
   ignore_errors: yes
   register: nfs_server_check
 
-- name: Debug mount point paths
-  ansible.builtin.debug:
-    msg: "Mount point path: {{ mount_base }}/{{ item }}"
-  loop: "{{ mount_points }}"
-
 - name: Mount NFS4 shares
   ansible.builtin.command:
     cmd: "mount -t nfs4 -o {{ nfs_mount_opts }} {{ nfs_server }}:{{ mount_base }}/{{ item }} {{ mount_base }}/{{ item }}"
@@ -45,5 +40,4 @@
     line: "{{ nfs_server }}:{{ mount_base }}/{{ item }} {{ mount_base }}/{{ item }} nfs4 {{ nfs_mount_opts }} 0 0"
     regexp: "^{{ nfs_server }}:{{ mount_base }}/{{ item }} {{ mount_base }}/{{ item }}"
   loop: "{{ mount_points }}"
-  become: yes
   when: nfs_server_check is succeeded
