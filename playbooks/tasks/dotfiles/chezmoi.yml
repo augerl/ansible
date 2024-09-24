@@ -13,6 +13,18 @@
     chdir: "/home/{{ username }}"
   when: not chezmoi_exists.stat.exists
 
+- name: Clone the tmux plugin manager repository
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: /home/{{ username }}/.config/tmux/plugins/tpm
+
+- name: Install tmux plugins
+  shell: /home/{{ username }}/.config/tmux/plugins/tpm/bin/install_plugins
+  args:
+    chdir: /home/{{ username }}
+  become: true
+  become_user: {{ username }}
+
 - name: Refresh home directory ownership
   file:
     path: "/home/{{ username }}/"
