@@ -13,6 +13,14 @@
     chdir: "/home/{{ username }}"
   when: not chezmoi_exists.stat.exists
 
+- name: Link .bash_aliases to .zsh_aliases
+  file:
+    src: /home/{{ username }}/.bash_aliases
+    dest: /home/{{ username }}/.zsh_aliases
+    state: link
+  become: true
+  become_user: "{{ username }}"
+
 - name: Clone the tmux plugin manager repository
   git:
     repo: https://github.com/tmux-plugins/tpm
