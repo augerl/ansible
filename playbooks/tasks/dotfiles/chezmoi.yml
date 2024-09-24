@@ -12,3 +12,10 @@
   args:
     chdir: "/home/{{ username }}"
   when: not chezmoi_exists.stat.exists
+
+- name: Refresh home directory ownership
+  file:
+    path: "/home/{{ username }}/"
+    recurse: yes
+    owner: "{{ username }}"
+    group: "{{ username }}"
