@@ -18,7 +18,6 @@
   become: yes
   become_user: "{{ username }}"
 
-
 - name: Display Oh My Zsh installation messages
   debug:
     msg: "{{ oh_my_zsh_install.stdout }}"
