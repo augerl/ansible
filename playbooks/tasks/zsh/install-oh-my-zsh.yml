@@ -13,25 +13,24 @@
 - name: Install Oh My Zsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-- name: Ensure Oh My Zsh plugins directory exists
-  file:
-    path: "/home/{{ username }}/.oh-my-zsh/custom/plugins"
-    state: directory
-    owner: "{{ username }}"
-    group: "{{ username }}"
+#- name: Ensure Oh My Zsh plugins directory exists
+#  file:
+#    path: "/home/{{ username }}/.oh-my-zsh/custom/plugins"
+#    state: directory
+#    owner: "{{ username }}"
+#    group: "{{ username }}"
 
 - name: Install Zsh plugins if not already installed
   ansible.builtin.git:
     repo: "{{ item.repo }}"
     dest: "/home/{{ username }}/.oh-my-zsh/custom/plugins/{{ item.name }}"
     update: no
-    version: master
   loop: "{{ zsh_plugins }}"
   register: zsh_plugins_result
 
-- name: Refresh Zsh plugin directory ownership
-  file:
-    path: "/home/{{ username }}/.oh-my-zsh/custom/plugins"
-    recurse: yes
-    owner: "{{ username }}"
-    group: "{{ username }}"
+#- name: Refresh Zsh plugin directory ownership
+#  file:
+#    path: "/home/{{ username }}/.oh-my-zsh/custom/plugins"
+#    recurse: yes
+#    owner: "{{ username }}"
+#    group: "{{ username }}"
