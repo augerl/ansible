@@ -13,3 +13,10 @@ zsh_plugins:
     repo: "https://github.com/MichaelAquilina/zsh-you-should-use.git"
   - name: zsh-bat
     repo: "https://github.com/fdellwing/zsh-bat.git"
+
+code-server_extensions:
+  - "esbenp.prettier-vscode"
+  - "oderwat.indent-rainbow"
+  - "redhat.ansible"
+  - "redhat.vscode-yaml"
+  - "eamodio.gitlens"
