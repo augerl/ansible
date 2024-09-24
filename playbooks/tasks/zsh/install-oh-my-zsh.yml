@@ -12,7 +12,12 @@
 
 - name: Install Oh My Zsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+  register: oh_my_zsh_install
 
+- name: Display Oh My Zsh installation messages
+  debug:
+    msg: "{{ oh_my_zsh_install.stdout }}"
+    
 #- name: Ensure Oh My Zsh plugins directory exists
 #  file:
 #    path: "/home/{{ username }}/.oh-my-zsh/custom/plugins"
