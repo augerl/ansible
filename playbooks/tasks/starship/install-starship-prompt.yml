@@ -21,5 +21,7 @@
   when: ansible_shell_type in ['bash', 'zsh']
 
 - name: Source the shell configuration
-  shell: source ~/.{{ ansible_shell_type }}rc
-  when: ansible_shell_type in ['bash', 'zsh']
+  shell: source "{{ item }}"
+  with_items:
+    - /home/{{ username }}/.bashrc
+    - /home/{{ username }}/.zshrc
