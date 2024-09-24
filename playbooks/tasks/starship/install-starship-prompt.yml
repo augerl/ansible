@@ -12,13 +12,13 @@
 
 - name: Ensure Starship is added to the shell configuration
   lineinfile:
-    path: "{{ item }}"
-    line: 'eval "$(starship init {{ ansible_shell_type }})"'
+    path: "{{ item.path }}"
+    line: 'eval "$(starship init {{ item.shell }})"'
     create: yes
-  with_items:
-    - /home/{{ username }}/.bashrc
-    - /home/{{ username }}/.zshrc
-  when: ansible_shell_type in ['bash', 'zsh']
+  loop:
+    - { path: "/home/{{ username }}/.bashrc", shell: "bash" }
+    - { path: "/home/{{ username }}/.zshrc", shell: "zsh" }
+
 
 - name: Source the shell configuration
   shell: source "{{ item }}"
