@@ -10,16 +10,8 @@
     name: "{{ username }}"
     shell: "/usr/bin/zsh"
 
-- name: Download Oh My Zsh installation script
-  get_url:
-    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    dest: /tmp/install_ohmyzsh.sh
-
-- name: Run Oh My Zsh installation script
-  command: sh /tmp/install_ohmyzsh.sh --unattended
-  register: ohmyzsh_result
-  failed_when: "'FAILED' in ohmyzsh_result.stderr"
-  changed_when: "'Oh My Zsh install successful' in ohmyzsh_result.stdout"
+- name: Install Oh My Zsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 - name: Ensure Oh My Zsh plugins directory exists
   file:
