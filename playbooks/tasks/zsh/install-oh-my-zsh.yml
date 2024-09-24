@@ -14,13 +14,8 @@
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
   args:
     chdir: "/home/{{ username }}"
-  register: oh_my_zsh_install
   become: yes
   become_user: "{{ username }}"
-
-- name: Display Oh My Zsh installation messages
-  debug:
-    msg: "{{ oh_my_zsh_install.stdout }}"
 
 - name: Ensure Oh My Zsh plugins directory exists
   file:
@@ -43,13 +38,3 @@
     recurse: yes
     owner: "{{ username }}"
     group: "{{ username }}"
-
-- name: Source the shell configuration files
-  shell: . "{{ item }}"
-  args:
-    executable: /bin/bash
-  loop:
-    - /home/{{ username }}/.bashrc
-    - /home/{{ username }}/.zshrc
-  become: yes
-  become_user: "{{ username }}"
