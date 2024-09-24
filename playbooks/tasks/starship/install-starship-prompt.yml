@@ -19,9 +19,3 @@
     - { path: "/home/{{ username }}/.bashrc", shell: "bash" }
 #    - { path: "/home/{{ username }}/.zshrc", shell: "zsh" }
 
-- name: Source the shell configuration
-  command: . "{{ item }}"
-  loop:
-    - /home/{{ username }}/.bashrc
-    - /home/{{ username }}/.zshrc
-
