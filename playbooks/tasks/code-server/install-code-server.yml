@@ -11,13 +11,13 @@
 
 - name: Download the latest code-server .deb package
   get_url:
-    url: "https://github.com/coder/code-server/releases/download/{{ latest_version.stdout }}/code-server_{{ latest_version.stdout }}_amd64.deb"
+    url: "https://github.com/coder/code-server/releases/download/v{{ latest_version.stdout }}/code-server_{{ latest_version.stdout }}_amd64.deb"
     dest: ~/.cache/code-server/code-server_{{ latest_version.stdout }}_amd64.deb
 
 - name: Install code-server
   apt:
     deb: ~/.cache/code-server/code-server_{{ latest_version.stdout }}_amd64.deb
-    
+
 - name: Remove cache directory
   file:
     path: ~/.cache/code-server
