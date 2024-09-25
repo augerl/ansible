@@ -17,6 +17,8 @@
 - name: Install code-server
   apt:
     deb: ~/.cache/code-server/code-server_{{ latest_version.stdout }}_amd64.deb
+  become: true
+  become_user: "{{ username }}"
 
 - name: Remove cache directory
   file:
@@ -34,16 +36,17 @@
   lineinfile:
     path: /home/{{ username }}/.config/code-server/config.yaml
     create: yes
-    line: "{{ item }}"
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
   loop:
-    - "bind-addr: {{ ansible_default_ipv4.address }}:8080"
-    - "auth: none"
-    - "cert: false"
+    - { line: "bind-addr: {{ ansible_default_ipv4.address }}:8080", regexp: '^bind-addr:' }
+    - { line: "auth: none", regexp: '^auth:' }
+    - { line: "cert: false", regexp: '^cert:' }
   become: true
   become_user: "{{ username }}"
 
 - name: Install code-server extensions
-  shell: "code-server --install-extension {{ item }}"
+  shell: sh -c "code-server --install-extension {{ item }}"
   loop: "{{ code-server_extensions }}"
   become: true
   become_user: "{{ username }}"
