@@ -14,7 +14,7 @@ zsh_plugins:
   - name: zsh-bat
     repo: "https://github.com/fdellwing/zsh-bat.git"
 
-code-server_extensions:
+vsc_extensions:
   - "esbenp.prettier-vscode"
   - "oderwat.indent-rainbow"
   - "redhat.ansible"

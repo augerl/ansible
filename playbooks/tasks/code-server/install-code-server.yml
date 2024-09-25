@@ -45,6 +45,6 @@
 
 - name: Install code-server extensions
   shell: sh -c "code-server --install-extension {{ item }}"
-  loop: "{{ code-server_extensions }}"
+  loop: "{{ vsc_extensions }}"
   become: true
   become_user: "{{ username }}"
