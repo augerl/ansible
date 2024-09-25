@@ -26,7 +26,7 @@
   become_user: "{{ username }}"
 
 - name: Install code-server extensions
-  shell: code-server --install-extension {{ item }}
+  shell: "code-server --install-extension {{ item }}"
   loop: "{{ code-server_extensions }}"
   become: true
   become_user: "{{ username }}"
