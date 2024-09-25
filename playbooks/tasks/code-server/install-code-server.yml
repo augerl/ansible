@@ -1,0 +1,51 @@
+---
+- name: Create cache directory
+  file:
+    path: ~/.cache/code-server
+    state: directory
+
+- name: Get the latest release version of code-server
+  shell: |
+    curl -s https://api.github.com/repos/coder/code-server/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
+  register: latest_version
+
+- name: Download the latest code-server .deb package
+  get_url:
+    url: "https://github.com/coder/code-server/releases/download/{{ latest_version.stdout }}/code-server_{{ latest_version.stdout }}_amd64.deb"
+    dest: ~/.cache/code-server/code-server_{{ latest_version.stdout }}_amd64.deb
+
+- name: Install code-server
+  apt:
+    deb: ~/.cache/code-server/code-server_{{ latest_version.stdout }}_amd64.deb
+  become: true
+  become_user: "{{ username }}"
+
+- name: Remove cache directory
+  file:
+    path: ~/.cache/code-server
+    state: absent
+
+- name: Enable and start code-server service
+  systemd:
+    name: "code-server@{{ username }}"
+    enabled: yes
+    state: started
+  become: true
+
+- name: Ensure code-server configuration is set
+  lineinfile:
+    path: /home/{{ username }}/.config/code-server/config.yaml
+    create: yes
+    line: "{{ item }}"
+  loop:
+    - "bind-addr: {{ ansible_default_ipv4.address }}:8080"
+    - "auth: none"
+    - "cert: false"
+  become: true
+  become_user: "{{ username }}"
+
+- name: Install code-server extensions
+  shell: "code-server --install-extension {{ item }}"
+  loop: "{{ code-server_extensions }}"
+  become: true
+  become_user: "{{ username }}"
