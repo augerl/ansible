@@ -6,7 +6,7 @@
 
 - name: Get the latest release version of code-server
   shell: |
-    curl -s https://api.github.com/repos/coder/code-server/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
+    curl -s https://api.github.com/repos/coder/code-server/releases/latest | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/'
   register: latest_version
 
 - name: Download the latest code-server .deb package
@@ -17,9 +17,7 @@
 - name: Install code-server
   apt:
     deb: ~/.cache/code-server/code-server_{{ latest_version.stdout }}_amd64.deb
-  become: true
-  become_user: "{{ username }}"
-
+    
 - name: Remove cache directory
   file:
     path: ~/.cache/code-server
