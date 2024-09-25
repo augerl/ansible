@@ -17,8 +17,6 @@
 - name: Install code-server
   apt:
     deb: ~/.cache/code-server/code-server_{{ latest_version.stdout }}_amd64.deb
-  become: true
-  become_user: "{{ username }}"
 
 - name: Remove cache directory
   file:
