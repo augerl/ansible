@@ -16,6 +16,5 @@
     - include_tasks: tasks/nfs/create-nfs-share-home-dir.yml
     - include_tasks: tasks/nfs/mount-nfs-remote-shares.yml
     - include_tasks: tasks/zsh/install-oh-my-zsh.yml
-    - include_tasks: tasks/code-server/install-code-server.yml
     - include_tasks: tasks/starship/install-starship-prompt.yml
     - include_tasks: tasks/dotfiles/chezmoi.yml
