@@ -30,10 +30,14 @@
 - name: Set Git user name
   ansible.builtin.command:
     cmd: git config --global user.name "{{ github_username }}"
+  become: true
+  become_user: "{{ username }}"
 
 - name: Set Git user email
   ansible.builtin.command:
     cmd: git config --global user.email "{{ github_mail }}"
+  become: true
+  become_user: "{{ username }}"
 
 - name: Clone Git repositories
   git:
